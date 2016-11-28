@@ -1,8 +1,140 @@
-<html>
-  <head>
-    <title>Hello world</title>
-  </head>
-  <body>
-    Hello, world
-  </body>
-</html>
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <!--Import Google Icon Font-->
+      <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="materialize/css/materialize.min.css"  media="screen,projection"/>
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      
+      <style>
+        body{
+          background-image: url(img/bg.png);
+          background-size: cover;
+        }
+        
+        #main-logo{
+          max-width: 100%;
+          max-height: 400px;
+        }
+        #time-container{
+          color: white;
+        }
+        
+        #big-timer{
+          font-weight: 200;
+          font-size: 10vw;
+          text-align: center;
+          vertical-align: top;
+
+        }
+        #seconds{
+          font-size: 50%;
+          vertical-align:super;
+        }
+        
+      </style>
+      
+    </head>
+
+    <body>
+      <nav class="orange darken-4">
+        <div class="nav-wrapper">
+          <a href="#" id ="clock" class="brand-logo right">Logo</a>
+          <ul id="nav-mobile" class="left hide-on-med-and-down">
+            <li><a href="sass.html">Hackers at Cambridge Game Gig 2016</a></li>
+            <li><a href="badges.html">Powered by Studio Gobo</a></li>
+            
+          </ul>
+        </div>
+      </nav>
+      
+      <div class="container">
+        <div class="row">
+          <div class="col s4">
+            <img id="main-logo" src="img/logo-final-alternate.svg.png">
+          </div>
+          <div id="time-container" class="col s8">
+            <p>Hacking time remaining:</p>
+            <h1 id="big-timer">
+            11:59<span id="seconds">:50</span>
+            </h1>
+          </div>
+          
+        </div>
+        
+        <div class="row">
+          <div class="col s12 m4">
+            <div class="card">
+              <div class="card-content">
+              <span class="card-title">Schedule</span>
+              <ul>
+                <li>10:00 Arrival</li>  
+                <li>11:00 Start Hacking!</li>
+                <li>etc</li>
+              </ul>
+              </div>
+            </div>
+            
+            
+          </div>
+          <div class="col s12 m8">
+            <div class="card">
+              <div class="card-content">
+              <span class="card-title">Gig Links</span>
+                <ul>Submit on Devpost</ul>
+                <ul>Unity</ul>
+                <ul>GameMaker</ul>
+                <ul>Game Gig on Facebook</ul>
+                <ul>Other links</ul>
+              </div>
+            </div>
+            
+            <div class="card">
+              <div class="card-content">
+              <span class="card-title">Social</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+        
+        
+        
+        
+      <!--Import jQuery before materialize.js-->
+      <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+      <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
+      
+      <script>
+        let date_end = new Date(2016,11,28,20,0,0,0);
+        
+        function setTimeRemaining()
+        {
+          let current = new Date();
+          
+          let timeLeft = date_end.getTime() - current.getTime();
+          
+          let hours = Math.floor(timeLeft / (1000*60*60));
+          let mins = Math.floor(timeLeft/(1000 * 60) - hours * 60);
+          let secs = Math.floor(timeLeft/1000 - mins * 60 - hours * 60 * 60);
+          
+          document.getElementById("big-timer").innerHTML = hours + ":" + (mins<10?"0":"") + mins + ":" + (secs<10?"0":"") + secs;
+        }
+        
+        
+        let d =new Date();
+        
+        document.getElementById("clock").innerHTML = 
+          d.getHours()+":"+d.getMinutes();
+        
+        setTimeRemaining();
+        
+        setInterval(setTimeRemaining,1000);
+        
+      </script>
+      
+    </body>
+  </html>
