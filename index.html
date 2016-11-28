@@ -109,7 +109,7 @@
       <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
       
       <script>
-        let date_end = new Date(2016,11,28,20,0,0,0);
+        let date_end = new Date(2016,10,28,20,0,0,0);
         
         function setTimeRemaining()
         {
@@ -121,14 +121,12 @@
           let mins = Math.floor(timeLeft/(1000 * 60) - hours * 60);
           let secs = Math.floor(timeLeft/1000 - mins * 60 - hours * 60 * 60);
           
-          document.getElementById("big-timer").innerHTML = hours + ":" + (mins<10?"0":"") + mins + ":" + (secs<10?"0":"") + secs;
+          document.getElementById("big-timer").innerHTML = hours + ":" + (mins<10?"0":"") + mins + "<span id=\"seconds\">:" + (secs<10?"0":"") + secs 
+            +"</span>";
+          
+          document.getElementById("clock").innerHTML = 
+          current.getHours()+":"+current.getMinutes();
         }
-        
-        
-        let d =new Date();
-        
-        document.getElementById("clock").innerHTML = 
-          d.getHours()+":"+d.getMinutes();
         
         setTimeRemaining();
         
