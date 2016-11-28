@@ -13,6 +13,7 @@
         body{
           background-image: url(img/bg.png);
           background-size: cover;
+          background-attachment: fixed;
         }
         
         #main-logo{
@@ -34,6 +35,33 @@
           font-size: 50%;
           vertical-align:super;
         }
+        #schedule li{
+          list-style-type: circle !important;
+          margin-left: 20px;
+        }
+        #schedule .active{
+          font-weight: bold !important;
+          list-style-type: disc !important;
+        }
+        #links a{
+          display: block;
+          font-size: 150%;
+          margin-top:-8px;
+          margin-left:10px;
+        }
+        #nav-mobile img{
+          padding:0;
+          margin:0;
+          max-height: 100%;
+        }
+        #nav-mobile a{
+          padding-bottom: 0;
+          margin-bottom: 0;
+          height: 64px;
+        }
+        nav {
+          height:64px !important;
+        }
         
       </style>
       
@@ -42,10 +70,11 @@
     <body>
       <nav class="orange darken-4">
         <div class="nav-wrapper">
-          <a href="#" id ="clock" class="brand-logo right">Logo</a>
+          <a href="#" id ="clock" class="brand-logo right hide-on-med-and-down">:</a>
+          <a href="http://studiogobo.com" class="brand-logo center" target="_blank"><img src="img/gobo-white.svg" height="64px"/></a>
           <ul id="nav-mobile" class="left hide-on-med-and-down">
-            <li><a href="sass.html">Hackers at Cambridge Game Gig 2016</a></li>
-            <li><a href="badges.html">Powered by Studio Gobo</a></li>
+            <li><a href="#">Hackers at Cambridge Game Gig 2016</a></li>
+            <li></li>
             
           </ul>
         </div>
@@ -54,7 +83,7 @@
       <div class="container">
         <div class="row">
           <div class="col s4">
-            <img id="main-logo" src="img/logo-final-alternate.svg.png">
+            <img id="main-logo" src="img/logo-final-alternate.svg.png" />
           </div>
           <div id="time-container" class="col s8">
             <p>Hacking time remaining:</p>
@@ -67,13 +96,16 @@
         
         <div class="row">
           <div class="col s12 m4">
-            <div class="card">
+            <div class="card" id="schedule">
               <div class="card-content">
               <span class="card-title">Schedule</span>
               <ul>
-                <li>10:00 Arrival</li>  
-                <li>11:00 Start Hacking!</li>
-                <li>etc</li>
+                <li id="t1000">10:00 Arrival</li>  
+                <li id="t1100">11:00 Start Hacking!</li>
+                <li id ="t1300">13:00 Lunch</li>
+                <li id ="t1800">18:00 Dinner</li>
+                <li id ="t2000">20:00 Stop Hacking!</li>
+                <li id ="t2100">21:00 Prizes and wrap-up</li>
               </ul>
               </div>
             </div>
@@ -81,20 +113,39 @@
             
           </div>
           <div class="col s12 m8">
-            <div class="card">
+            <div class="card" id="links">
               <div class="card-content">
               <span class="card-title">Gig Links</span>
-                <ul>Submit on Devpost</ul>
-                <ul>Unity</ul>
-                <ul>GameMaker</ul>
-                <ul>Game Gig on Facebook</ul>
-                <ul>Other links</ul>
+                <ul>
+                <li>Submit your game
+                  <a href="https://example.com" target="_blank">example.com</a>
+                </li>
+                <li>Sign-up for hardware
+                  <a href="https://example.com" target="_blank">example.com</a>
+                </li>
+                <li>Get involved 
+                  <a href="https://facebook.com/hackersatcambridge" target="_blank">fb.me/hackersatcambridge</a>
+                </li>
+                </ul>
               </div>
             </div>
             
             <div class="card">
               <div class="card-content">
               <span class="card-title">Social</span>
+                <p>
+                  <div class="row">
+                    <div class="col s12 m6">
+                      <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fhackersatcambridge&tabs=timeline&width=300&height=500&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId=475536969318398" width="300" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+                    </div>
+                    <div class="col s12 m6">
+                      <a class="twitter-timeline"  href="https://twitter.com/hashtag/gamegig2016" data-widget-id="803287500106121216"></a>
+                      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+          
+                    </div>
+                    
+                </div>
+                </p>
               </div>
             </div>
           </div>
@@ -113,9 +164,38 @@
         
         function setTimeRemaining()
         {
-          let current = new Date();
+          let current = new Date()
           
           let timeLeft = date_end.getTime() - current.getTime();
+          
+          // Set the top right clock time
+          document.getElementById("clock").innerHTML = 
+          current.getHours()+":"+ (current.getMinutes()<10?"0":"") + current.getMinutes();
+          
+          // Set the current schedule position
+          let id = "t1000";
+          let h = current.getHours();
+          if(h >= 11) id = "t1100";
+          if(h >= 13) id = "t1300";
+          if(h >= 18) id = "t1800";
+          if(h >= 20) id = "t2000";
+          if(h >= 21) id = "t2100";
+          
+          let items = document.getElementsByClassName("li");
+          
+          for(i=0; i<items.length; i++)
+          {
+            items[i].className = "";
+          }
+          
+          document.getElementById(id).className = "active";
+          
+          // Abort if time is up
+          if(timeLeft < 0)
+          {
+            document.getElementById("big-timer").innerHTML = "Time's up!";/*"0:00<span id=\"seconds\">:00</span>";*/
+            return;
+          }
           
           let hours = Math.floor(timeLeft / (1000*60*60));
           let mins = Math.floor(timeLeft/(1000 * 60) - hours * 60);
@@ -124,8 +204,7 @@
           document.getElementById("big-timer").innerHTML = hours + ":" + (mins<10?"0":"") + mins + "<span id=\"seconds\">:" + (secs<10?"0":"") + secs 
             +"</span>";
           
-          document.getElementById("clock").innerHTML = 
-          current.getHours()+":"+current.getMinutes();
+
         }
         
         setTimeRemaining();
