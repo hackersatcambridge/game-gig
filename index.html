@@ -114,11 +114,17 @@
       <script type="text/javascript" src="materialize/js/materialize.min.js"></script>
 
       <script>
-        let date_end = new Date(2016,10,28,20,0,0,0);
+        const date_start = new Date(2016,11,2,10,30,0,0);
+        const date_end = new Date(2016,11,2,20,0,0,0);
 
         function setTimeRemaining()
         {
-          let current = new Date()
+
+          const current = new Date();
+
+          if(current < date_start) {
+            document.getElementById("big-timer").innerHTML = "TIme s";
+          } else {
 
           let timeLeft = date_end.getTime() - current.getTime();
 
@@ -157,7 +163,7 @@
 
           document.getElementById("big-timer").innerHTML = hours + ":" + (mins<10?"0":"") + mins + "<span id=\"seconds\">:" + (secs<10?"0":"") + secs
             +"</span>";
-
+          }
 
         }
 
