@@ -54,11 +54,11 @@
               <span class="card-title">Schedule</span>
               <ul>
                 <li id="t1000">10:00 Arrival</li>
-                <li id="t1100">11:00 Start Hacking!</li>
-                <li id ="t1300">13:00 Lunch</li>
+                <li id="t1030">10:30 Start Hacking!</li>
+                <li id ="t1300">12:00 Lunch</li>
                 <li id ="t1800">18:00 Dinner</li>
                 <li id ="t2000">20:00 Stop Hacking!</li>
-                <li id ="t2100">21:00 Prizes and wrap-up</li>
+                <li id ="t2100">21:10 LT1 Prizes and wrap-up</li>
               </ul>
               </div>
             </div>
@@ -70,7 +70,7 @@
               <div class="card-content">
               <span class="card-title">Gig Links</span>
                 <ul>
-                <li>Submit your game
+                <!--<li>Submit your game
                   <a href="https://example.com" target="_blank">example.com</a>
                 </li>
                 <li>Sign-up for hardware
@@ -78,7 +78,7 @@
                 </li>
                 <li>Get involved
                   <a href="https://facebook.com/hackersatcambridge" target="_blank">fb.me/hackersatcambridge</a>
-                </li>
+                </li> -->
                 <li>Game Engines
                   <a href="http://www.yoyogames.com/gamemaker" target="_blank">GameMaker</a>
                   <a href="https://www.unrealengine.com/" target="_blank">Unreal Engine</a>
@@ -129,16 +129,18 @@
 
           const current = new Date();
 
-          if(current < date_start) {
-            document.getElementById("big-timer").innerHTML = "TIme s";
-          } else {
-
-          let timeLeft = date_end.getTime() - current.getTime();
-
           // Set the top right clock time
           document.getElementById("clock").innerHTML =
           current.getHours()+":"+ (current.getMinutes()<10?"0":"") + current.getMinutes();
 
+          let timeLeft = 0;
+          if(current < date_start) {
+            document.getElementById("time-container").getElementsByTagName("p")[0].innerHTML = "Time left to Gig start:";
+            timeLeft = date_start.getTime() - current.getTime();
+          } else {
+            document.getElementById("time-container").getElementsByTagName("p")[0].innerHTML = "Gig time remaining:";
+            timeLeft = date_end.getTime() - current.getTime();
+          }
           // Set the current schedule position
           let id = "t1000";
           let h = current.getHours();
@@ -170,8 +172,6 @@
 
           document.getElementById("big-timer").innerHTML = hours + ":" + (mins<10?"0":"") + mins + "<span id=\"seconds\">:" + (secs<10?"0":"") + secs
             +"</span>";
-          }
-
         }
 
         setTimeRemaining();
