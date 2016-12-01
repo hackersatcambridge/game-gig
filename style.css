@@ -55,3 +55,12 @@ body{
 nav {
   height:64px !important;
 }
+
+#bulletlist li{
+  list-style-type: disc !important;
+  margin-left: 20px;
+  margin-bottom: 10px;
+}
+.emphasis{
+  font-weight: bold;
+}
