@@ -18,6 +18,7 @@
 
       <link rel="stylesheet" type="text/css" href="style.css">
 
+      <title>Hackers at Cambridge Game Gig</title>
     </head>
 
     <body>
@@ -55,10 +56,10 @@
               <ul>
                 <li id="t1000">10:00 Arrival</li>
                 <li id="t1030">10:30 Start Hacking!</li>
-                <li id ="t1300">12:00 Lunch</li>
+                <li id ="t1200">12:00 Lunch</li>
                 <li id ="t1800">18:00 Dinner</li>
                 <li id ="t2000">20:00 Stop Hacking!</li>
-                <li id ="t2100">21:10 LT1 Prizes and wrap-up</li>
+                <li id ="t2110">21:10 LT1 Prizes and wrap-up</li>
               </ul>
               </div>
             </div>
@@ -141,24 +142,29 @@
             document.getElementById("time-container").getElementsByTagName("p")[0].innerHTML = "Gig time remaining:";
             timeLeft = date_end.getTime() - current.getTime();
           }
-          // Set the current schedule position
-          let id = "t1000";
-          let h = current.getHours();
-          if(h >= 11) id = "t1100";
-          if(h >= 13) id = "t1300";
-          if(h >= 18) id = "t1800";
-          if(h >= 20) id = "t2000";
-          if(h >= 21) id = "t2100";
-
-          let items = document.getElementsByClassName("li");
-
-          for(i=0; i<items.length; i++)
+          
+          // If it is the day of the Game Gig
+          if(current.getDate() == date_start.getDate())
           {
-            items[i].className = "";
+            // Set the current schedule position
+            var id = "t1000";
+            var h = current.getHours();
+            var m = current.getMinutes();
+            if((h == 10 && m >=30) || h >= 11) id = "t1030";
+            if(h >= 12) id = "t1200";
+            if(h >= 18) id = "t1800";
+            if(h >= 20) id = "t2000";
+            if(h >= 21 && m >= 10) id = "t2110";
+
+            let items = document.getElementsByClassName("li");
+
+            for(i=0; i<items.length; i++)
+            {
+              items[i].className = "";
+            }
+
+            document.getElementById(id).className = "active";
           }
-
-          document.getElementById(id).className = "active";
-
           // Abort if time is up
           if(timeLeft < 0)
           {
